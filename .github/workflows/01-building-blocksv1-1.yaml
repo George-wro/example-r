@@ -1,0 +1,28 @@
+name: "01 – Building Blocks 1.1"
+on: [push, workflow_dispatch]
+
+jobs:
+  echo-hello:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Say hello"
+        run : echo "Hello, World!"
+      - name: Tworze pliki
+        run: |
+          echo "plik 1" > plik1.txt
+          echo "plik 2" > plik2.txt
+      - name: wyświetlam zawartość katalogów
+        run: ls -la
+      - name: wyswietylam zawartość plików
+        run: cat plik1.txt plik2.txt
+  echo-goodbye:
+    runs-on: ubuntu-latest
+    steps:
+      - name : "failed step" 
+        run: |
+          echo "I"
+          echo "will"
+          echo "fail"
+          exit 1
+      - name: "say goodbye"
+        run: echo "Goodbye!"
