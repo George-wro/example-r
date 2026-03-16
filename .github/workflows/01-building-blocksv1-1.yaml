@@ -1,5 +1,5 @@
 name: "01 – Building Blocks 1.1"
-on: [push, workflow_dispatch]
+on: [workflow_dispatch]
 
 jobs:
   echo-hello:
