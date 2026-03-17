@@ -25,7 +25,7 @@ jobs:
           echo "This job is running on an MAC OS runner."
           echo "$RUNNER_OS"
 
-  mac-echo:
+  self-echo:
     runs-on: self-hosted
     steps:
       - name: "Show OS"
