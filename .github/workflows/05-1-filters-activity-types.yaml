@@ -1,0 +1,12 @@
+name: "05 – 1 – Event Filters and Activity Types"
+on: 
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: echo 
+        run: echo "opened or synch"
