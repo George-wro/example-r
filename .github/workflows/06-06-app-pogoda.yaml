@@ -84,5 +84,5 @@ jobs:
           SHORT_SHA="${GITHUB_SHA::7}"
           HUB_IMAGE_BASE="${{ secrets.DOCKERHUB_USERNAME }}/python_pogoda_16_03_2026"
 
-          docker push "$HUB_IMAGE_BASE:piotrkoska"
+          docker push "$HUB_IMAGE_BASE:donaldtusk"
           docker push "$HUB_IMAGE_BASE:$SHORT_SHA"
