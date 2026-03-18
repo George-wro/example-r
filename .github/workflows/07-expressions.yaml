@@ -1,8 +1,8 @@
 name: 07 – Using Expressions
 run-name: 07 – Using Expressions | DEBUG - ${{ inputs.debug }}
 on: [push, workflow_dispatch]
-    inputs:
-      debug:
+inputs:
+    debug:
         type: boolean
         default: false
 
@@ -11,12 +11,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: "[debug] Print start-up data"
-      if: inputs.debug == true
-      run: |
-        echo "triggered: ${{ github.event_name}}"
-        echo "branch: ${{ github.ref}}"
+        if: inputs.debug == true
+        run: |
+            echo "triggered: ${{ github.event_name}}"
+            echo "branch: ${{ github.ref}}"
 
-    steps:
       - name: Test
         if: github.event_name == 'push'
         run: echo "I was triggered by a push event"
