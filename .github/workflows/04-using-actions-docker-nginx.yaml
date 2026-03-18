@@ -1,5 +1,5 @@
 name: "04 - Using Actions:Docker Nginx build & curl test"
-on: [push, workflow_dispatch]
+on: [workflow_dispatch]
 
 jobs:
   build-and-test:
