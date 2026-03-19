@@ -23,7 +23,7 @@ pipeline {
                         sparseCheckout([[path: '06-context/pogoda_python/']])
                     ],
                     userRemoteConfigs: [[
-                        url: 'https://github.com/TheRealMamuth/work-jsystems-github-actions-examples-public-tasks.git'
+                        url: 'https://github.com/George-wro/example-r.git'
                     ]]
                 )
             }
