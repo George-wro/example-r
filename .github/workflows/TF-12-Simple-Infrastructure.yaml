@@ -32,11 +32,13 @@ jobs:
     environment: ${{ matrix.environment }}
     strategy:
       fail-fast: true
-      max-parallel: 1
+      #max-parallel: 1
       matrix:
         include:
           - environment: tf-dev
+            srodowisko: Development
           - environment: tf-stag
+            srodowisko: Staging
 
     steps:
       - name: Checkout repository
@@ -86,11 +88,13 @@ jobs:
     environment: ${{ matrix.environment }}
     strategy:
       fail-fast: true
-      max-parallel: 1
+      #max-parallel: 1
       matrix:
         include:
           - environment: tf-dev
+            srodowisko: Development
           - environment: tf-stag
+            srodowisko: Staging
 
     steps:
       - name: Download image artifact
@@ -147,11 +151,13 @@ jobs:
     environment: ${{ matrix.environment }}
     strategy:
       fail-fast: true
-      max-parallel: 1
+      #max-parallel: 1
       matrix:
         include:
           - environment: tf-dev
+            srodowisko: Development
           - environment: tf-stag
+            srodowisko: Staging
 
     defaults:
       run:
@@ -200,11 +206,13 @@ jobs:
     environment: ${{ matrix.environment }}
     strategy:
       fail-fast: true
-      max-parallel: 1
+      #max-parallel: 1
       matrix:
         include:
           - environment: tf-dev
+            srodowisko: Development
           - environment: tf-stag
+            srodowisko: Staging
 
     defaults:
       run:
@@ -234,7 +242,7 @@ jobs:
           terraform { 
             cloud { 
               
-              organization = "gb" 
+              organization = "piotr_koska_test" 
 
               workspaces { 
                 name = "${{ matrix.environment }}" 
@@ -277,11 +285,13 @@ jobs:
     environment: ${{ matrix.environment }}
     strategy:
       fail-fast: true
-      max-parallel: 1
+      #max-parallel: 1
       matrix:
         include:
           - environment: tf-dev
+            srodowisko: Development
           - environment: tf-stag
+            srodowisko: Staging
 
     defaults:
       run:
@@ -312,7 +322,7 @@ jobs:
           terraform { 
             cloud { 
               
-              organization = "test-g-bor" 
+              organization = "piotr_koska_test" 
 
               workspaces { 
                 name = "${{ matrix.environment }}" 
@@ -370,15 +380,18 @@ jobs:
           echo "Czekam 20 sekund na pełną gotowość dropleta..."
           sleep 20
 
+      - name: Show Ansible inventory (for debug)
+        run: cat inventories/${{ matrix.srodowisko }}/hosts.yaml
+
       - name: Run Ansible playbook - install nginx
-        run: ansible-playbook -i inventories/${{ matrix.environment }}/hosts.yaml install-nginx.yaml --limit ${{ vars.DROPLET_NAME }}
+        run: ansible-playbook -i inventories/${{ matrix.srodowisko }}/hosts.yaml install-nginx.yaml --limit ${{ vars.DROPLET_NAME }}
 
       - name: Run Ansible playbook - deploy app
         run: |
           ansible-galaxy collection install community.docker
 
           ansible-playbook \
-            -i inventories/${{ matrix.environment }}/hosts.yaml \
+            -i inventories/${{ matrix.srodowisko }}/hosts.yaml \
             deploy-app.yml \
             --limit ${{ vars.DROPLET_NAME }} \
             -e "docker_image=${{ env.HUB_IMAGE_BASE }}:ansible-${{ matrix.environment }}" \
@@ -396,10 +409,12 @@ jobs:
     environment: ${{ matrix.environment }}
     strategy:
       fail-fast: true
-      max-parallel: 1
+      #max-parallel: 1
       matrix:
         include:
           - environment: tf-prod
+            srodowisko: Production
+            
 
     steps:
       - name: Checkout repository
@@ -413,7 +428,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-${{ matrix.environment }}-docker-buildx-${{ hashFiles('CWICZENIA/06-context/pogoda_python_flusk/Dockerfile', 'CWICZENIA/06-context/pogoda_python_flusk/requirements.txt') }}
+          key: ${{ runner.os }}-${{ matrix.environment }}-docker-buildx-${{ hashFiles('06-context/pogoda_python_flusk/Dockerfile', '06-context/pogoda_python_flusk/requirements.txt') }}
           restore-keys: |
             ${{ runner.os }}-${{ matrix.environment }}-docker-buildx-
 
@@ -436,7 +451,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: pogoda-image-${{ matrix.environment }}
-          path: CWICZENIA/06-context/pogoda_python_flusk/image.tar
+          path: 06-context/pogoda_python_flusk/image.tar
 
   # =====================
   # 2. TEST JOB
@@ -450,10 +465,11 @@ jobs:
     environment: ${{ matrix.environment }}
     strategy:
       fail-fast: true
-      max-parallel: 1
+      #max-parallel: 1
       matrix:
         include:
           - environment: tf-prod
+            srodowisko: Production
 
     steps:
       - name: Download image artifact
@@ -511,10 +527,12 @@ jobs:
     environment: ${{ matrix.environment }}
     strategy:
       fail-fast: true
-      max-parallel: 1
+      #max-parallel: 1
       matrix:
         include:
           - environment: tf-prod
+            srodowisko: Production
+
     defaults:
       run:
         working-directory: ${{ env.WORKDIR }}
@@ -531,7 +549,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-${{ matrix.environment }}-docker-buildx-${{ hashFiles('CWICZENIA/06-context/pogoda_python_flusk/Dockerfile', 'CWICZENIA/06-context/pogoda_python_flusk/requirements.txt') }}
+          key: ${{ runner.os }}-${{ matrix.environment }}-docker-buildx-${{ hashFiles('06-context/pogoda_python_flusk/Dockerfile', '06-context/pogoda_python_flusk/requirements.txt') }}
           restore-keys: |
             ${{ runner.os }}-${{ matrix.environment }}-docker-buildx-
 
@@ -562,10 +580,12 @@ jobs:
     environment: ${{ matrix.environment }}
     strategy:
       fail-fast: true
-      max-parallel: 1
+      #max-parallel: 1
       matrix:
         include:
           - environment: tf-prod
+            srodowisko: Production
+
     defaults:
       run:
         working-directory: TERRAFORM/04
@@ -637,10 +657,12 @@ jobs:
     environment: ${{ matrix.environment }}
     strategy:
       fail-fast: true
-      max-parallel: 1
+      #max-parallel: 1
       matrix:
         include:
           - environment: tf-prod
+            srodowisko: Production
+            
     defaults:
       run:
         working-directory: TERRAFORM/04
@@ -670,7 +692,7 @@ jobs:
           terraform { 
             cloud { 
               
-              organization = "test-g-bor" 
+              organization = "piotr_koska_test" 
 
               workspaces { 
                 name = "${{ matrix.environment }}" 
@@ -728,15 +750,18 @@ jobs:
           echo "Czekam 20 sekund na pełną gotowość dropleta..."
           sleep 20
 
+      - name: Show Ansible inventory (for debug)
+        run: cat inventories/${{ matrix.srodowisko }}/hosts.yaml
+
       - name: Run Ansible playbook - install nginx
-        run: ansible-playbook -i inventories/${{ matrix.environment }}/hosts.yaml install-nginx.yaml --limit ${{ vars.DROPLET_NAME }}
+        run: ansible-playbook -i inventories/${{ matrix.srodowisko }}/hosts.yaml install-nginx.yaml --limit ${{ vars.DROPLET_NAME }}
 
       - name: Run Ansible playbook - deploy app
         run: |
           ansible-galaxy collection install community.docker
 
           ansible-playbook \
-            -i inventories/${{ matrix.environment }}/hosts.yaml \
+            -i inventories/${{ matrix.srodowisko }}/hosts.yaml \
             deploy-app.yml \
             --limit ${{ vars.DROPLET_NAME }} \
             -e "docker_image=${{ env.HUB_IMAGE_BASE }}:ansible-${{ matrix.environment }}" \
