@@ -9,7 +9,7 @@ resource "digitalocean_droplet" "main" {
 }
 
 resource "digitalocean_project" "main" {
-  name        = "piotr-koska-github-actions-project"
+  name        = "g-borowik-github-actions-project"
   description = "Project for GitHub Actions examples"
   purpose     = "Testing and learning"
   environment = "Development"
@@ -23,7 +23,7 @@ resource "digitalocean_project_resources" "main" {
 }
 
 resource "digitalocean_vpc" "main" {
-  name     = "piotr-koska-github-actions-vpc"
+  name     = "g-borowik-github-actions-vpc"
   region   = "fra1"
   ip_range = "10.18.60.0/24"
 }
