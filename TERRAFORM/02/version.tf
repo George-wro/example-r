@@ -8,7 +8,7 @@ terraform {
   }
   cloud {
 
-    organization = "piotr_koska_test"
+    organization = "test-g-bor"
 
     workspaces {
       name = "github_action_szkolenie"

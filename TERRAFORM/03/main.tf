@@ -26,7 +26,7 @@ resource "digitalocean_project_resources" "main" {
 resource "digitalocean_vpc" "main" {
   name     = "piotr-koska-github-actions-vpc"
   region   = "fra1"
-  ip_range = "10.10.10.0/24"
+  ip_range = "10.18.60.0/24"
 }
 
 resource "tls_private_key" "main" {
