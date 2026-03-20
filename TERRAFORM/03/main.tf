@@ -1,5 +1,5 @@
 resource "digitalocean_droplet" "main" {
-  name   = "piotr-koska-github-actions-droplet"
+  name   = "g-borowik-github-actions-droplet"
   region = "fra1"
   size   = "s-1vcpu-1gb"
   image  = "ubuntu-24-04-x64"
@@ -10,7 +10,7 @@ resource "digitalocean_droplet" "main" {
 }
 
 resource "digitalocean_project" "main" {
-  name        = "piotr-koska-github-actions-project"
+  name        = "g-borowik-github-actions-project"
   description = "Project for GitHub Actions examples"
   purpose     = "Testing and learning"
   environment = "Development"
@@ -24,7 +24,7 @@ resource "digitalocean_project_resources" "main" {
 }
 
 resource "digitalocean_vpc" "main" {
-  name     = "piotr-koska-github-actions-vpc"
+  name     = "g-borowik-github-actions-vpc"
   region   = "fra1"
   ip_range = "10.18.60.0/24"
 }
@@ -34,18 +34,18 @@ resource "tls_private_key" "main" {
 }
 
 resource "digitalocean_ssh_key" "main" {
-  name       = "piotr-koska-github-actions-ssh-key"
+  name       = "g-borowik-github-actions-ssh-key"
   public_key = tls_private_key.main.public_key_openssh
 }
 
 resource "digitalocean_ssh_key" "own" {
-  name       = "piotr-koska-github-actions-own-ssh-key"
+  name       = "g-borowik-github-actions-own-ssh-key"
   public_key = var.own_ssh_public_key
 
 }
 
 resource "digitalocean_firewall" "main" {
-  name        = "piotr-koska-github-actions-firewall"
+  name        = "g-borowik-github-actions-firewall"
   droplet_ids = [digitalocean_droplet.main.id]
 
   inbound_rule {
